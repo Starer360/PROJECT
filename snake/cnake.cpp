@@ -45,5 +45,9 @@ void chessboard::food()
         y1 = rand() % H - 1;
     } while (qp[y1][x1] == ' ');
     qp[y1][x1] = '&';
+}
+
+void chessboard::prt(int grade, int score, int gamespeed)
+{
     
 }
