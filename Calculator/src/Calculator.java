@@ -13,7 +13,7 @@ public class Calculator implements ActionListener
     JButton decButton, equButton, delButton, clrButton;
     JPanel panel;
 
-    Font myFont = new Font("Ink Free", Font.BOLD, 30);
+    Font myFont = new Font("Monospaced", Font.BOLD, 30);
 
     double number1 = 0, number2 = 0, result = 0;
     char operator;
@@ -24,6 +24,13 @@ public class Calculator implements ActionListener
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(420, 550);
         frame.setLayout(null);
+
+        textField = new JTextField();
+        textField.setBounds(50, 25, 300, 50);
+        textField.setFont(myFont);
+
+
+        frame.add(textField);
         frame.setVisible(true);
 
     }
