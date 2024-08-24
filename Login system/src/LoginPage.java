@@ -1,7 +1,9 @@
 import java.awt.Font;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,8 +32,7 @@ public class LoginPage implements ActionListener
         userIDField.setBounds(125, 100, 200, 25);
         userPasswordField.setBounds(125, 150, 200, 25);
 
-        messagLabel.setBounds(125, 250, 250, 35);
-        messagLabel.setFont(new Font(null, Font.ITALIC, 25));
+        messagLabel.setBounds(135, 250, 250, 35);
 
 
         loginButton.setBounds(125, 200, 100, 25);
@@ -42,6 +43,7 @@ public class LoginPage implements ActionListener
         resetButton.setFocusable(false);
         resetButton.addActionListener(this);
 
+        frame.add(messagLabel);
         frame.add(userIDField);
         frame.add(userPasswordField);
         frame.add(userIDLabel);
@@ -56,6 +58,41 @@ public class LoginPage implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) 
     {
-        
+        if (e.getSource() == resetButton)
+        {
+            userIDField.setText("");
+            userPasswordField.setText("");
+        }
+
+        if (e.getSource() == loginButton)
+        {
+            String userID = userIDField.getText();
+            String userPassword = String.valueOf(userPasswordField.getPassword());
+
+            if (logininfo.containsKey(userID))
+            {
+                if (logininfo.get(userID).equals(userPassword))
+                {
+                    messagLabel.setForeground(Color.green);
+                    messagLabel.setText("Login successful");
+                    frame.dispose();
+                    WelcomePage welcomePage = new WelcomePage(userID);
+                }
+                else 
+                {
+                    messagLabel.setForeground(Color.red);
+                    messagLabel.setText("Wrong account or password");
+                    userPasswordField.setText("");
+                }
+            }
+            else 
+            {
+                messagLabel.setForeground(Color.red);
+                messagLabel.setText("Wrong account or password");
+                userPasswordField.setText("");
+            }
+            
+        }
+
     }
 }
