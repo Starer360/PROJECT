@@ -21,7 +21,33 @@ public class TicTacToe implements ActionListener
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
 
-        textfield.setBackground(null);
+        textfield.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // 设置上边距为 20 像素
+        textfield.setBackground(new Color(25, 25, 25));
+        textfield.setForeground(new Color(25, 255, 0));
+        textfield.setFont(new Font("Ink Free", Font.BOLD,75));
+        textfield.setHorizontalAlignment(JLabel.CENTER);
+        textfield.setText("Tic-Tac-Toe");
+        textfield.setOpaque(true);
+
+
+        title_Panel.setLayout(new BorderLayout());
+        title_Panel.setBounds(0,100,800,100);
+
+        button_Panel.setLayout(new GridLayout(3, 3));
+        button_Panel.setBackground(new Color(150, 150, 155));
+
+        for (int i = 0;i < 9; i++)
+        {
+            buttons[i] = new JButton();
+            button_Panel.add(buttons[i]);
+            buttons[i].setFont(new Font("MV Boli",Font.BOLD, 120));
+            buttons[i].setFocusable(false);
+            buttons[i].addActionListener(this);
+        }
+
+        title_Panel.add(textfield);
+        frame.add(title_Panel,BorderLayout.NORTH);
+        frame.add(button_Panel);
     }
 
     @Override
