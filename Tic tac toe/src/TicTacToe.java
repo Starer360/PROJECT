@@ -15,6 +15,7 @@ public class TicTacToe implements ActionListener
 
     TicTacToe()
     {
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,800);
         frame.getContentPane().setBackground(new Color(50,50,50)); //获取 JFrame 的内容面板 (ContentPane)
@@ -108,17 +109,131 @@ public class TicTacToe implements ActionListener
 
     public void check()
     {
+        if (buttons[0].getText() == "X" && 
+            buttons[1].getText() == "X" &&
+            buttons[2].getText() == "X")
+        {
+            xWins(0, 1, 2);
+        }
+        if (buttons[3].getText() == "X" && 
+            buttons[4].getText() == "X" &&
+            buttons[5].getText() == "X")
+        {
+            xWins(3, 4, 5);
+        }
+        if (buttons[6].getText() == "X" && 
+            buttons[7].getText() == "X" &&
+            buttons[8].getText() == "X")
+        {
+            xWins(6, 7, 8);
+        }
+        if (buttons[0].getText() == "X" && 
+            buttons[3].getText() == "X" &&
+            buttons[6].getText() == "X")
+        {
+            xWins(0, 3, 6);
+        }
+        if (buttons[1].getText() == "X" && 
+            buttons[4].getText() == "X" &&
+            buttons[7].getText() == "X")
+        {
+            xWins(1, 4, 7);
+        }
+        if (buttons[2].getText() == "X" && 
+            buttons[5].getText() == "X" &&
+            buttons[8].getText() == "X")
+        {
+            xWins(2, 5, 8);
+        }
+        if (buttons[0].getText() == "X" && 
+            buttons[4].getText() == "X" &&
+            buttons[8].getText() == "X")
+        {
+            xWins(0, 4, 8);
+        }
+        if (buttons[2].getText() == "X" && 
+            buttons[4].getText() == "X" &&
+            buttons[6].getText() == "X")
+        {
+            xWins(2, 4, 6);
+        }
+
+
+        if (buttons[0].getText() == "O" && 
+            buttons[1].getText() == "O" &&
+            buttons[2].getText() == "O")
+        {
+            oWins(0, 1, 2);
+        }
+        if (buttons[3].getText() == "O" && 
+            buttons[4].getText() == "O" &&
+            buttons[5].getText() == "O")
+        {
+            oWins(3, 4, 5);
+        }
+        if (buttons[6].getText() == "O" && 
+            buttons[7].getText() == "O" &&
+            buttons[8].getText() == "O")
+        {
+            oWins(6, 7, 8);
+        }
+        if (buttons[0].getText() == "O" && 
+            buttons[3].getText() == "O" &&
+            buttons[6].getText() == "O")
+        {
+            oWins(0, 3, 6);
+        }
+        if (buttons[1].getText() == "O" && 
+            buttons[4].getText() == "O" &&
+            buttons[7].getText() == "O")
+        {
+            oWins(1, 4, 7);
+        }
+        if (buttons[2].getText() == "O" && 
+            buttons[5].getText() == "O" &&
+            buttons[8].getText() == "O")
+        {
+            oWins(2, 5, 8);
+        }
+        if (buttons[0].getText() == "O" && 
+            buttons[4].getText() == "O" &&
+            buttons[8].getText() == "O")
+        {
+            oWins(0, 4, 8);
+        }
+        if (buttons[2].getText() == "O" && 
+            buttons[4].getText() == "O" &&
+            buttons[6].getText() == "O")
+        {
+            oWins(2, 4, 6);
+        }
         
     }
 
     public void xWins(int a, int b, int c)
     {
+        buttons[a].setBackground(Color.GREEN);
+        buttons[b].setBackground(Color.GREEN);
+        buttons[c].setBackground(Color.GREEN);
 
+        for (int i = 0; i < 9; i++)
+        {
+            buttons[i].setEnabled(false); //启用或禁用组件
+        }
+        textfield.setText("X win");
     }
 
     public void oWins(int a, int b, int c)
     {
+        buttons[a].setBackground(Color.blue);
+        buttons[b].setBackground(Color.blue);
+        buttons[c].setBackground(Color.blue);
 
+        for (int i = 0; i < 9; i++)
+        {
+            buttons[i].setEnabled(false); //启用或禁用组件
+        }
+        textfield.setText("O win");
     }
 
 }
