@@ -48,22 +48,67 @@ public class TicTacToe implements ActionListener
         title_Panel.add(textfield);
         frame.add(title_Panel,BorderLayout.NORTH);
         frame.add(button_Panel);
+
+        firstTurn();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) 
     {
-        
+        for (int i = 0; i < 9; i++)
+        {
+            if (e.getSource() == buttons[i])
+            {
+                if (buttons[i].getText() == "")
+                {
+                    if (player1_turn)
+                    {
+                        buttons[i].setForeground(new Color(255, 0, 0));
+                        buttons[i].setText("X");
+                        player1_turn = false;
+                        textfield.setText("O turn");
+                        check();
+                    }
+                    else
+                    {
+                        buttons[i].setForeground(new Color(255, 0, 0));
+                        buttons[i].setText("O");
+                        player1_turn = true;
+                        textfield.setText("X turn");
+                        check();
+                    }
+                }
+                
+            }
+        }
     }
 
     public void firstTurn()
     {
 
+        try
+        {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+
+        if (random.nextInt(2) == 0) //0 或 1
+        {
+            player1_turn = true;
+            textfield.setText("X turn");
+        }
+        else {
+            player1_turn = false;
+            textfield.setText("O turn");
+        }
     }
 
     public void check()
     {
-
+        
     }
 
     public void xWins(int a, int b, int c)
