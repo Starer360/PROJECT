@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements ActionListener
     int applesEaten;
     int appleX;
     int appleY;
-    char diretion = 'R';
+    char diretion = 'D';
     boolean running = false;
     Timer timer;
     Random random;
@@ -48,42 +48,142 @@ public class GamePanel extends JPanel implements ActionListener
 
     public void draw(Graphics g)
     {
-        for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++)
+        if (running)
         {
-            g.drawLine(i*UNIT_SIZE, 0, i*UNIT_SIZE, SCREEN_HEIGHT);
-            g.drawLine(0, i*UNIT_SIZE, SCREEN_WIDTH, i*UNIT_SIZE);
+            //线条
+            /*
+            for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++)
+            {
+                g.drawLine(i*UNIT_SIZE, 0, i*UNIT_SIZE, SCREEN_HEIGHT);
+                g.drawLine(0, i*UNIT_SIZE, SCREEN_WIDTH, i*UNIT_SIZE);
+            }
+             */
+            g.setColor(Color.red);
+            g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+
+            for (int i = 0; i < bodyParts; i++)
+            {
+                if (i == 0)
+                {
+                    g.setColor(Color.green);
+                    g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+                }
+                else
+                {
+                    //g.setColor(new Color(45, 180, 0));
+                    g.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+                    g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+                }
+            }
+            g.setColor(Color.red);
+            g.setFont(new Font("Ink Free", Font.BOLD, 40));
+            FontMetrics metrics = getFontMetrics(g.getFont()); //获取与当前字体相关的度量信息
+            g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Score"))/2, g.getFont().getSize());
         }
+        else
+        {
+            gameOver(g);
+        }
+        
     }
 
     public void newApple()
     {
-
+        appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE)) * UNIT_SIZE;
+        appleY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE)) * UNIT_SIZE;
     }
 
     public void move()
     {
-
+        for (int i = bodyParts; i > 0; i--)
+        {
+            x[i] = x[i-1];
+            y[i] = y[i-1];
+        }
+        switch (diretion) 
+        {
+            case 'S':
+                y[0] = y[0] + UNIT_SIZE;
+                break;
+            case 'W':
+                y[0] = y[0] - UNIT_SIZE;
+                break;
+            case 'A':
+                x[0] = x[0] - UNIT_SIZE;
+                break;
+            case 'D':
+                x[0] = x[0] + UNIT_SIZE;
+                break;
+        }
     }
 
     public void checkApple()
     {
-
+        if ((x[0] == appleX) && y[0] == appleY)
+        {
+            bodyParts++;
+            applesEaten++;
+            newApple();
+        }
     }
 
     public void checkCoisions() //检查碰撞
     {
+        for (int i = bodyParts; i > 0; i--)
+        {
+             if ((x[i] == x[0]) && y[i] == y[0])
+             {
+                running = false;
+             }
 
+             if (x[0] < 0)
+             {
+                running = false;
+             }
+
+             if (x[0] > SCREEN_WIDTH)
+             {
+                running = false;
+             }
+
+             if (y[0] < 0)
+             {
+                running = false;
+             }
+
+             if (y[0] > SCREEN_HEIGHT)
+             {
+                running = false;
+             }
+
+             if (running == false)
+             {
+                timer.stop();
+             }
+        }
     }
 
     public void gameOver(Graphics g)
     {
-
+        g.setColor(Color.red);
+        g.setFont(new Font("Ink Free", Font.BOLD, 40));
+        FontMetrics metrics1 = getFontMetrics(g.getFont()); //获取与当前字体相关的度量信息
+        g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score"))/2, g.getFont().getSize());
+        g.setColor(Color.red);
+        g.setFont(new Font("Ink Free", Font.BOLD, 75));
+        FontMetrics metrics2 = getFontMetrics(g.getFont()); //获取与当前字体相关的度量信息
+        g.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);
     }
     @Override
     public void actionPerformed(ActionEvent e) 
     {
-        
-        
+        if (running)
+        {
+            move();
+            checkApple();
+            checkCoisions();
+        }
+        repaint();
     }
 
     public class MyKeyAdapter extends KeyAdapter
@@ -91,7 +191,34 @@ public class GamePanel extends JPanel implements ActionListener
         @Override
         public void keyPressed(KeyEvent e)
         {
-
+            switch (e.getKeyCode()) 
+            {
+                case KeyEvent.VK_A:
+                    if (diretion != 'D')
+                    {
+                        diretion = 'A';
+                    }
+                    break;
+                case KeyEvent.VK_D:
+                    if (diretion != 'A')
+                    {
+                        diretion = 'D';
+                    }
+                    break;
+                case KeyEvent.VK_W:
+                    if (diretion != 'S')
+                    {
+                        diretion = 'W';
+                    }
+                    break;
+                case KeyEvent.VK_S:
+                    if (diretion != 'W')
+                    {
+                        diretion = 'S';
+                    }
+                    break;
+            
+            }
         }
 
     }
