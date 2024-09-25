@@ -40,7 +40,8 @@ public class GamePanel extends JPanel implements Runnable
     }
     public void newPaddles()
     {
-
+        paddle1 = new Paddle(0, (GAME_HEIGHT/2)-(PADDLE_HEIGHT/2), PADDLE_WIDTH, PADDLE_HEIGHT, 1);
+        paddle2 = new Paddle(GAME_WIDTH-PADDLE_WIDTH, (GAME_HEIGHT/2)-(PADDLE_HEIGHT/2), PADDLE_WIDTH, PADDLE_HEIGHT, 2);
     }
     public void paint(Graphics g)
     {
@@ -51,7 +52,8 @@ public class GamePanel extends JPanel implements Runnable
     }
     public void draw(Graphics g)
     {
-
+        paddle1.draw(g);
+        paddle2.draw(g);
     }
     public void move()
     {
@@ -63,7 +65,23 @@ public class GamePanel extends JPanel implements Runnable
     }
     public void run()
     {
-
+        long lastTime = System.nanoTime();
+        double amountOfTicks = 60.0;
+        double ns = 1000000000 / amountOfTicks;
+        double delta = 0;
+        while(true)
+        {
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            if (delta >= 1)
+            {
+                move();
+                checkCollision();
+                repaint();
+                delta--;
+            }
+        }
     }
     public class AL extends KeyAdapter
     {
